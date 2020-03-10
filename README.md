@@ -2,13 +2,13 @@
 
 
 ## Ссылки: 
-- ul [Trello]:https://trello.com/b/rrm4ue19
-- ul Figma
+-  [Trello](https://trello.com/b/rrm4ue19)
+-  Figma
 
 ## Список участников команды (группа 1.2) и предполагаемое распределение ролей:
-- ul Влад Глущенко - тестирование, backend.
-- ul Артем Шипилов - аналитика, составление документации, frontend.
-- ul Максим Дуров  - backend, frontend.
+-  Влад Глущенко - тестирование, backend.
+-  Артем Шипилов - аналитика, составление документации, frontend.
+-  Максим Дуров  - backend, frontend.
 
 ## Email для связи: maximdurov1@gmail.com
 
