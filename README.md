@@ -3,7 +3,7 @@
 
 ## Ссылки: 
 -  [Trello](https://trello.com/b/rrm4ue19)
--  Figma
+-  [Miro](https://miro.com/app/board/o9J_kunrj24=/)
 
 ## Список участников команды (группа 1.2) и предполагаемое распределение ролей:
 -  Влад Глущенко - тестирование, backend.
