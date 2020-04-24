@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+
+{% block navbar %}
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Главная</a>
+            <a class="nav-item nav-link" href="profile">Мой профиль</a>
+        </div>
+    </div>
+{% endblock navbar %}
+
+{% block content %}
+    <form action="/filter/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="selectSort">Сортировать по</label>
+            <select class="form-control" id="selectSort" name="selectSort">
+                <option value="alphabetAZ">Алфавиту А-Я</option>
+                <option value="alphabetZA">Алфавиту Я-А</option>
+                <option value="markUp">Возрастанию оценки</option>
+                <option value="markDown">Убыванию оценки</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectCity">Город</label>
+            <select class="form-control" id="selectCity" name="selectCity">
+                <option value="">---</option>
+                <option>Воронеж</option>
+                <option>Москва</option>
+                <option>Санкт-Петербург</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectType">Тип Достопримечательности</label>
+            <select class="form-control" id="selectType" name="selectType">
+                <option value="">---</option>
+                <option>Архитектура и памятники</option>
+                <option>Религиозные объекты</option>
+                <option>Природные объекты</option>
+                <option>Исторические объекты</option>
+                <option>Развлекательные объекты</option>
+                <option>Музеи</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Применить фильтры</button>
+    </form>
+
+    <form action="/search/" class="form-inline my-2 my-lg-0" method="post">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" id="search_attr"
+               name="search_attr">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск по названию</button>
+    </form>
+
+{% endblock content %}
+
+{% block attractions %}
+    {{ bad_result_search }}
+    {% for a in attractions %}
+        <div class="card" style="width: 50rem;">
+            <img class="card-img-top" src="{{ a.photo.url }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ a.name }}</h5>
+                <p class="card-text">{{ a.descriptions }}</p>
+                <p class="card-text">{{ a.city_name }}</p>
+                <a href="/attraction/{{ a.id }}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock attractions %}

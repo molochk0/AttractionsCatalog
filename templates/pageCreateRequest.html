@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block navbar %}
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Главная</a>
+        </div>
+    </div>
+{% endblock navbar %}
+
+
+{% block content %}
+    <div class="large-offset-3 large-6 columns">
+        <form action="" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+        </form>
+    </div>
+{% endblock content %}

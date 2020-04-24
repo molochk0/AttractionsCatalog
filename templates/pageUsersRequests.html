@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/">Главная</a>
+        <a class="nav-item nav-link" href="profile_m">Мой профиль</a>
+    </div>
+</div>
+{% endblock navbar %}
+
+{% block content %}
+{% for a in attractions %}
+        <div class="card" style="width: 50rem;">
+            <img class="card-img-top" src="{{ a.photo.url }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ a.name }}</h5>
+                <p class="card-text">{{ a.descriptions }}</p>
+                <p class="card-text">{{ a.city_name }}</p>
+                <a href="/attraction/moderation/{{ a.id }}" class="btn btn-primary">Модерировать</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

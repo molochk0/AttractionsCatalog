@@ -1,0 +1,17 @@
+{% extends "base_attraction.html" %}
+
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/">Главная</a>
+        <a class="nav-item nav-link" href="/profile">Мой профиль</a>
+    </div>
+</div>
+{% endblock navbar %}
+
+{% block function %}
+<form action="/example/">
+    <button type="submit" class="btn btn-primary">Поставить оценку</button>
+</form>
+{% endblock function %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/">Главная</a>
+        <a class="nav-item nav-link" href="/users_requests">Заявки пользователей</a>
+    </div>
+</div>
+{% endblock navbar %}
+
+{% block content %}
+<form action="/request">
+    <button type="submit" class="btn btn-primary">Создать заявку</button>
+</form>
+<form action="/auth/logout">
+    <button type="submit" class="btn btn-primary">Выйти из профиля</button>
+</form>
+{% endblock content %}
