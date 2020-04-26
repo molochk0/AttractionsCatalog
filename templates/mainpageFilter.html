@@ -2,7 +2,14 @@
 
 
 {% block navbar %}
-
+    {% if request.user.is_authenticated %}
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Главная</a>
+            <a class="nav-item nav-link" href="/profile">Мой профиль</a>
+        </div>
+    </div>
+    {% else %}
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/">Главная</a>
@@ -10,11 +17,12 @@
             <a class="nav-item nav-link" href="/auth/registration">Регистрация</a>
         </div>
     </div>
+    {% endif %}
 {% endblock navbar %}
 
 {% block content %}
-    <form action="/filter/" method="post">
-        {% csrf_token %}
+    <form action="/filter/" method="get">
+
         <div class="form-group">
             <label for="selectSort">Сортировать по</label>
             <select class="form-control" id="selectSort" name="selectSort">
@@ -48,8 +56,7 @@
         <button type="submit" class="btn btn-primary">Применить фильтры</button>
     </form>
 
-    <form action="/search/" class="form-inline my-2 my-lg-0" method="post">
-        {% csrf_token %}
+    <form action="/search/" class="form-inline my-2 my-lg-0" method="get">
         <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" id="search_attr"
                name="search_attr">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск по названию</button>
@@ -71,4 +78,33 @@
             </div>
         </div>
     {% endfor %}
+
 {% endblock attractions %}
+
+{% block paginator3000 %}
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if attractions.has_previous %}
+                <li class="page-item"><a class="page-link" href="/{{ url_bonus }}/page/{{ attractions.previous_page_number }}/?selectType={{ selectType }}&selectCity={{ selectCity }}&selectSort={{ selectSort }}"
+                                         tabindex="-1">&laquo;</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&laquo;</a></li>
+            {% endif %}
+            {% for page in attractions.paginator.page_range %}
+                {% if page == attractions.number %}
+                    <li class="page-item active"><a class="page-link" href="/{{ url_bonus }}/page/{{ page }}/?selectType={{ selectType }}&selectCity={{ selectCity }}&selectSort={{ selectSort }}">{{ page }}<span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="/{{ url_bonus }}/page/{{ page }}/?selectType={{ selectType }}&selectCity={{ selectCity }}&selectSort={{ selectSort }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if attractions.has_next %}
+                <li class="page-item"><a class="page-link" href="/{{ url_bonus }}/page/{{ attractions.next_page_number }}/?selectType={{ selectType }}&selectCity={{ selectCity }}&selectSort={{ selectSort }}" tabindex="-1">&raquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock paginator3000 %}

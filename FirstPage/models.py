@@ -9,10 +9,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
+    id = models.AutoField(primary_key=True, unique=True)
     email = models.EmailField('email address', unique=True)
     nickname = models.CharField('nickname', max_length=30, blank=True)
     is_moderator = models.BooleanField(default=False)
-    id = models.AutoField(primary_key=True)
     is_staff = models.BooleanField('staff status', default=False)
 
     objects = UserManager()

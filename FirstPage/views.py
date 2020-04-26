@@ -2,20 +2,18 @@ from django.shortcuts import render, redirect
 from FirstPage.models import *
 from FirstPage.forms import CreateAttractionForm
 from django.contrib.sessions.models import Session
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+# from .filters import AtrFilter
+
+PAGE_SIZE = 2
 
 
-# def main_page_anonymous(request):
-#   return render(request, "mainpageAnonymous.html")
-
-def main_page(request):
+def main_page(request, page_number=1):
     output = Attractions.objects.all().filter(is_approved=True)
-    if request.user.is_authenticated:
-        session = Session.objects.get(session_key=request.session.session_key)
-        uid = session.get_decoded().get('_auth_user_id')
-        return render(request, "mainpageAP.html",
-                      {'attractions': output, 'uid': uid})
-    return render(request, "mainpageAnonymous.html",
-                  {'attractions': output})
+    current_page = Paginator(output, PAGE_SIZE)
+    return render(request, "mainpageMain.html",
+                  {'attractions': current_page.page(page_number)})
 
 
 def page_create_request(request):
@@ -40,45 +38,46 @@ def page_profile_ap(request):
         return render(request, "pageMyProfileAP.html")
 
 
-def filter_attr_mainpage(request):
-    if request.user.is_authenticated:
-        template_name = 'mainpageAP.html'
-    else:
-        template_name = 'mainpageAnonymous.html'
+def filter_attr_mainpage(request, page_number=1):
+    template_name = 'mainpageFilter.html'
     order_by_key = 'name'
-    if request.method == 'POST':
-        selectSort = request.POST.get('selectSort', '')
+    if request.method == 'GET':
+        selectSort = request.GET.get('selectSort', '')
         if selectSort == 'alphabetAZ':
             order_by_key = 'name'
         elif selectSort == 'alphabetZA':
             order_by_key = '-name'
         elif selectSort == 'markUp':
-            order_by_key = ''
+            order_by_key = ''  #########
         elif selectSort == 'markDown':
-            order_by_key = ''
-        selectCity = request.POST.get('selectCity', '')
-        selectType = request.POST.get('selectType', '')
+            order_by_key = '' #########
+        selectCity = request.GET.get('selectCity', '')
+        selectType = request.GET.get('selectType', '')
         result_bd_request = Attractions.objects.all().filter(is_approved=True, type__contains=selectType,
                                                              city_name__contains=selectCity).order_by(order_by_key)
         if result_bd_request.count() == 0:
             return render(request, template_name, {'bad_result_search': 'НЕ НАШЕЛ'})
-        return render(request, template_name, {'attractions': result_bd_request})
+        current_page = Paginator(result_bd_request, PAGE_SIZE)
+        return render(request, template_name,
+                      {'attractions': current_page.page(page_number), 'url_bonus': 'filter', 'selectSort': selectSort,
+                       'selectCity': selectCity, 'selectType': selectType})
 
 
-def search_attr_by_name(request):
-    if request.user.is_authenticated:
-        template_name = 'mainpageAP.html'
-    else:
-        template_name = 'mainpageAnonymous.html'
-    if request.method == 'POST':
-        search_attr = request.POST.get('search_attr', '')
+def search_attr_by_name(request, page_number=1):
+    template_name = 'mainpageSearch.html'
+    if request.method == 'GET':
+        search_attr = request.GET.get('search_attr', '')
         result_bd_request = Attractions.objects.all().filter(name__contains=search_attr, is_approved=True)
         if result_bd_request.count() == 0:
             return render(request, template_name, {'bad_result_search': 'НЕ НАШЕЛ'})
-        return render(request, template_name, {'attractions': result_bd_request})
+        current_page = Paginator(result_bd_request, PAGE_SIZE)
+        return render(request, template_name, {'attractions': current_page.page(page_number), 'url_bonus': 'search',
+                                               'search_attr': search_attr})
 
 
-def page_users_request(request):
+def page_users_request(request, page_number=1):
     if request.user.is_authenticated:
+        result_bd_request = Attractions.objects.all().filter(is_approved=False)
+        current_page = Paginator(result_bd_request, PAGE_SIZE)
         return render(request, "pageUsersRequests.html",
-                      {'attractions': Attractions.objects.all().filter(is_approved=False)})
+                      {'attractions': current_page.page(page_number), 'url_bonus': 'users_requests'})

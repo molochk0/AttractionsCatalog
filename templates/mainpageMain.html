@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+
+{% block navbar %}
+    {% if request.user.is_authenticated %}
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Главная</a>
+            <a class="nav-item nav-link" href="/profile">Мой профиль</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Главная</a>
+            <a class="nav-item nav-link" href="/auth/login">Вход</a>
+            <a class="nav-item nav-link" href="/auth/registration">Регистрация</a>
+        </div>
+    </div>
+    {% endif %}
+{% endblock navbar %}
+
+{% block content %}
+    <form action="/filter/" method="get">
+
+        <div class="form-group">
+            <label for="selectSort">Сортировать по</label>
+            <select class="form-control" id="selectSort" name="selectSort">
+                <option value="alphabetAZ">Алфавиту А-Я</option>
+                <option value="alphabetZA">Алфавиту Я-А</option>
+                <option value="markUp">Возрастанию оценки</option>
+                <option value="markDown">Убыванию оценки</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectCity">Город</label>
+            <select class="form-control" id="selectCity" name="selectCity">
+                <option value="">---</option>
+                <option>Воронеж</option>
+                <option>Москва</option>
+                <option>Санкт-Петербург</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="selectType">Тип Достопримечательности</label>
+            <select class="form-control" id="selectType" name="selectType">
+                <option value="">---</option>
+                <option>Архитектура и памятники</option>
+                <option>Религиозные объекты</option>
+                <option>Природные объекты</option>
+                <option>Исторические объекты</option>
+                <option>Развлекательные объекты</option>
+                <option>Музеи</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Применить фильтры</button>
+    </form>
+
+    <form action="/search/" class="form-inline my-2 my-lg-0" method="get">
+        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" id="search_attr"
+               name="search_attr">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск по названию</button>
+    </form>
+
+
+{% endblock content %}
+
+{% block attractions %}
+    {{ bad_result_search }}
+    {% for a in attractions %}
+        <div class="card" style="width: 50rem;">
+            <img class="card-img-top" src="{{ a.photo.url }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ a.name }}</h5>
+                <p class="card-text">{{ a.descriptions }}</p>
+                <p class="card-text">{{ a.city_name }}</p>
+                <a href="/attraction/{{ a.id }}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock attractions %}
+
+{% block paginator3000 %}
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if attractions.has_previous %}
+                <li class="page-item"><a class="page-link" href="/page/{{ attractions.previous_page_number }}/"
+                                         tabindex="-1">&laquo;</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&laquo;</a></li>
+            {% endif %}
+            {% for page in attractions.paginator.page_range %}
+                {% if page == attractions.number %}
+                    <li class="page-item active"><a class="page-link" href="/page/{{ page }}/">{{ page }}<span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="/page/{{ page }}/">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if attractions.has_next %}
+                <li class="page-item"><a class="page-link" href="/page/{{ attractions.next_page_number }}/" tabindex="-1">&raquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock paginator3000 %}

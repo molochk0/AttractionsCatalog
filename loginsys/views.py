@@ -2,8 +2,6 @@
 
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
-from django.views.generic.edit import FormView
 from loginsys.forms import *
 
 
@@ -37,8 +35,6 @@ def register(request):
         newuser_form = RegForm(request.POST)
         if newuser_form.is_valid():
             newuser_form.save()
-            # newuser = auth.authenticate(email=newuser_form.cleaned_data['email'], password=newuser_form.cleaned_data['password2'])
-            # auth.login(request, newuser)
             return redirect('/auth/login')
         else:
             args['form'] = newuser_form
