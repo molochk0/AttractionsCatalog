@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from loginsys.forms import *
+from Attractions_Catalog_App.loginsys.forms import *
 
 
 def login(request):

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import *
-from FirstPage.models import User
+from Attractions_Catalog_App.FirstPage import User
 
 
 class RegForm(UserCreationForm):

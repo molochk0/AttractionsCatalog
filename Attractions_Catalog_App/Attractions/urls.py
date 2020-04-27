@@ -1,5 +1,5 @@
 from django.urls import re_path, path
-from Attractions import views
+from Attractions_Catalog_App.Attractions import views
 
 urlpatterns = [
 

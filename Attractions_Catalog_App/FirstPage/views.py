@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from FirstPage.models import *
-from FirstPage.forms import CreateAttractionForm
+from Attractions_Catalog_App.FirstPage import *
+from Attractions_Catalog_App.FirstPage import CreateAttractionForm
 from django.contrib.sessions.models import Session
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import *
-from FirstPage.models import Attractions
+from Attractions_Catalog_App.FirstPage import Attractions
 
 
 class CreateAttractionForm(forms.ModelForm):

@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import re_path, path, include
-from FirstPage import views
+from Attractions_Catalog_App.FirstPage import views
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from Attractions import views as atrviews
+from Attractions_Catalog_App.Attractions import views as atrviews
 
 extrapatternsRequests = [
                             re_path(r'^page/(?P<page_number>\d+)/$', views.page_users_request),
@@ -33,8 +33,8 @@ urlpatterns = [
                   re_path(r'^accept_request/', atrviews.accept_request),
                   re_path(r'^decline_request/', atrviews.decline_request),
 
-                  re_path(r'attraction/', include('Attractions.urls')),
-                  re_path(r'auth/', include('loginsys.urls')),
+                  re_path(r'attraction/', include('Attractions_Catalog_App.Attractions.urls')),
+                  re_path(r'auth/', include('Attractions_Catalog_App.loginsys.urls')),
 
                   re_path(r'^page/(\d+)/$', views.main_page),
 

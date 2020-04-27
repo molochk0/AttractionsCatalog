@@ -1,5 +1,5 @@
 from django.urls import re_path
-from loginsys.views import *
+from Attractions_Catalog_App.loginsys.views import *
 
 urlpatterns = [
     re_path(r'^login/$', login),
