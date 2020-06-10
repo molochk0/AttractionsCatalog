@@ -1,0 +1,15 @@
+{% extends "base_attraction.html" %}
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/">Главная</a>
+        <a class="nav-item nav-link" href="/auth/login">Вход</a>
+    </div>
+</div>
+{% endblock navbar %}
+
+{% block avg_mark %}<p>Средняя оценка: {{ attraction.count_avg_mark }}</p>{% endblock avg_mark %}
+{% block function %}
+    <p>Чтобы поставить оценку, вам необходимо войти в систему</p>
+{% endblock function %}

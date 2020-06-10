@@ -4,25 +4,25 @@
 {% block navbar %}
     {% if request.user.is_authenticated %}
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="/">Главная</a>
-            <a class="nav-item nav-link" href="/profile">Мой профиль</a>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">Главная</a>
+                <a class="nav-item nav-link" href="/profile">Мой профиль</a>
+            </div>
         </div>
-    </div>
     {% else %}
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="/">Главная</a>
-            <a class="nav-item nav-link" href="/auth/login">Вход</a>
-            <a class="nav-item nav-link" href="/auth/registration">Регистрация</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">Главная</a>
+                <a class="nav-item nav-link" href="/auth/login">Вход</a>
+                <a class="nav-item nav-link" href="/auth/registration">Регистрация</a>
+            </div>
         </div>
-    </div>
     {% endif %}
 {% endblock navbar %}
 
-{% block content %}
-    <form action="/filter/" method="get">
 
+{% block content %}
+    <form action="/filter/" style="margin-top: 10px" method="get">
         <div class="form-group">
             <label for="selectSort">Сортировать по</label>
             <select class="form-control" id="selectSort" name="selectSort">
@@ -34,12 +34,9 @@
         </div>
         <div class="form-group">
             <label for="selectCity">Город</label>
-            <select class="form-control" id="selectCity" name="selectCity">
-                <option value="">---</option>
-                <option>Воронеж</option>
-                <option>Москва</option>
-                <option>Санкт-Петербург</option>
-            </select>
+            <input class="form-control" type="search" placeholder="Поиск" aria-label="Search"
+                   id="selectCity"
+                   name="selectCity">
         </div>
         <div class="form-group">
             <label for="selectType">Тип Достопримечательности</label>
@@ -53,54 +50,61 @@
                 <option>Музеи</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Применить фильтры</button>
+        <button type="submit" class="btn btn-primary btn-block">Применить фильтры</button>
     </form>
-
-    <form action="/search/" class="form-inline my-2 my-lg-0" method="get">
-        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" id="search_attr"
+    <form action="/search/" class="form-block" method="get">
+        <input class="form-control" style="margin-top: 30px" type="search" placeholder="Поиск" aria-label="Search"
+               id="search_attr"
                name="search_attr">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск по названию</button>
+        <button class="btn btn-outline-primary btn-block" style="margin-top: 10px" type="submit">Поиск по названию</button>
     </form>
-
 
 {% endblock content %}
 
 {% block attractions %}
+
     {{ bad_result_search }}
+
     {% for a in attractions %}
-        <div class="card" style="width: 50rem;">
-            <img class="card-img-top" src="{{ a.photo.url }}" alt="Card image cap">
+        <div class="card" style="margin-top: 10px">
+            <img class="card-img-top" src="{{ a.get_image_mainpage.url }}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{ a.name }}</h5>
-                <p class="card-text">{{ a.descriptions }}</p>
+                <p class="card-text">{{ a.count_avg_mark }}</p>
                 <p class="card-text">{{ a.city_name }}</p>
                 <a href="/attraction/{{ a.id }}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>
     {% endfor %}
 
+
 {% endblock attractions %}
+
 
 {% block paginator3000 %}
 
     <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center" style="margin-top: 10px">
             {% if attractions.has_previous %}
-                <li class="page-item"><a class="page-link" href="/page/{{ attractions.previous_page_number }}/"
+                <li class="page-item"><a class="page-link"
+                                         href="/page/{{ attractions.previous_page_number }}/"
                                          tabindex="-1">&laquo;</a></li>
             {% else %}
                 <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&laquo;</a></li>
             {% endif %}
             {% for page in attractions.paginator.page_range %}
                 {% if page == attractions.number %}
-                    <li class="page-item active"><a class="page-link" href="/page/{{ page }}/">{{ page }}<span class="sr-only">(current)</span></a>
+                    <li class="page-item active"><a class="page-link"
+                                                    href="/page/{{ page }}/">{{ page }}<span
+                            class="sr-only">(current)</span></a>
                     </li>
                 {% else %}
                     <li class="page-item"><a class="page-link" href="/page/{{ page }}/">{{ page }}</a></li>
                 {% endif %}
             {% endfor %}
             {% if attractions.has_next %}
-                <li class="page-item"><a class="page-link" href="/page/{{ attractions.next_page_number }}/" tabindex="-1">&raquo;</a>
+                <li class="page-item"><a class="page-link" href="/page/{{ attractions.next_page_number }}/"
+                                         tabindex="-1">&raquo;</a>
                 </li>
             {% else %}
                 <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&raquo;</a></li>

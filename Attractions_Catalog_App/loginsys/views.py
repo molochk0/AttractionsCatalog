@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from Attractions_Catalog_App.loginsys.forms import *
+from loginsys.forms import *
 
 
 def login(request):
@@ -16,7 +16,7 @@ def login(request):
             auth.login(request, user)
             return redirect('/', permanent=True)
         else:
-            args['login_error'] = "Пользователь не найден"
+            args['valid_error'] = 'Введен неверный адрес электронной почты или пароль.'
             return render(request, 'pageLogin.html', args)
 
     else:
@@ -33,9 +33,11 @@ def register(request):
     args['form'] = RegForm()
     if request.method == 'POST':
         newuser_form = RegForm(request.POST)
-        if newuser_form.is_valid():
+        agreement = bool(request.POST.get('personal_data_agreement', ''))
+        if newuser_form.is_valid() and agreement:
             newuser_form.save()
             return redirect('/auth/login')
         else:
             args['form'] = newuser_form
+            args['valid_error'] = 'При Регистрации произошла ошибка. Пожалуйста, проверьте правильность введенных данных.'
     return render(request, 'register.html', args)

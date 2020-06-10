@@ -8,12 +8,35 @@
 </div>
 {% endblock navbar %}
 
+{% block user_info %}
+    <div style="margin-top: 10px">
+    <p>Ваше имя пользователя: {{ user.nickname }}</p>
+    <p>Ваш адрес электронной почты: {{ user.email }}</p>
+    На нашем сайте вы можете:
+    <ul>
+    <li>Посмотреть интересующие вас достопримечательности</li>
+    <li>Посмотреть их оценки</li>
+    <li>Оценить достопримечательности самостоятельно</li>
+    <li>Создать заявку на добавление новой достопримечательности</li>
+    </ul>
+    </div>
+{% endblock user_info %}
 
 {% block content %}
+
 <form action="/request">
-    <button type="submit" class="btn btn-primary">Создать заявку</button>
+    <button type="submit" style="margin-top: 10px" class="btn btn-primary btn-block">Создать заявку</button>
 </form>
+
 <form action="/auth/logout">
-    <button type="submit" class="btn btn-danger">Выйти из профиля</button>
+    <button type="submit" style="margin-top: 10px" class="btn btn-danger btn-block">Выйти из профиля</button>
 </form>
 {% endblock content %}
+
+{% block attractions %}
+    <div style="margin-top: 10px">
+    <p>Уважаемые пользователи! Приглашаем вас поделиться своими мыслями по поводу нашего Справочника. Что бы вы хотели улучшить?</p>
+    <p>Мы готовы, по мере возможности, реализовывать ваши пожелания, чтобы делать сайт более удобным в использовании.</p>
+    <p>По этим и любым другим вопросам вы можете связаться с нами по электронной почте: <a href="mailto:attractionscatalog@gmail.com?subject=AttractionsCatalog">attractionscatalog@gmail.com</a>.</p>
+    </div>
+{% endblock attractions %}

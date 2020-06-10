@@ -1,0 +1,354 @@
+swagger: '2.0'
+info:
+  description:
+    https://magnatm.pythonanywhere.com/.
+    Тестовые данные для входа
+    Логин - new@new.com
+    Пароль - newnew
+  version: 1.0.0
+  title: "Справочник достопримечательностей"
+
+host: "127.0.0.1:8000"
+basePath: /
+
+schemes:
+  - http
+
+tags:
+  - name: Пользователи
+    description: Все о пользователях
+  - name: Достопримечательности
+    description: Все о достопримечательностях
+
+paths:
+  /users_requests/:
+    get:
+      tags:
+        - Достопримечательности
+      summary: Заявки пользователей
+      description: Возвращает страницу с заявками пользователей (доступно только для Модераторов)
+      operationId: users_requests
+      produces:
+        - text/html
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+  /auth/login/:
+    post:
+      tags:
+        - Пользователи
+      summary: Вход в систему
+      description: Вход в систему посредством адреса электронной почты и пароля
+      operationId: postLogin
+      produces:
+        - text/html
+      parameters:
+        - name: email
+          in: formData
+          description: Адрес электронной почты
+          required: true
+          type: string
+          format: email
+        - name: password
+          in: formData
+          description: Пароль
+          required: true
+          type: string
+          format: password
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /auth/logout/:
+    get:
+      tags:
+        - Пользователи
+      summary: Выйти из профиля
+      description: Выйти из профиля
+      operationId: getLogout
+      produces:
+        - text/html
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /auth/registration/:
+    post:
+      tags:
+        - Пользователи
+      summary: Зарегистрироваться
+      description: Я даю свое согласие на обработку моих персональных данных, относящихся исключительно к перечисленным ниже категориям персональных данных адрес электронной почты. Данным согласием я разрешаю автоматизированную, а также без использования средств автоматизации обработку моих персональных данных, а именно сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение персональных данных, а также осуществление любых иных действий, предусмотренных действующим законом Российской Федерации. Срок действия данного согласия не ограничен. Подтверждаю, что, давая согласие, я действую без принуждения, по собственной воле и в своих интересах.
+      operationId: postRegistration
+      produces:
+        - text/html
+      parameters:
+        - name: email
+          in: formData
+          description: Адрес электронной почты
+          required: true
+          type: string
+          format: email
+        - name: password1
+          in: formData
+          description: Пароль
+          required: true
+          type: string
+          format: password
+        - name: password2
+          in: formData
+          description: Подтверждение пароля
+          required: true
+          type: string
+          format: password
+        - name: personal_data_agreement
+          in: formData
+          description: Согласие на обработку персональных данных
+          required: true
+          type: boolean
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /attraction/{attrId}/set_mark/:
+    post:
+      tags:
+        - Достопримечательности
+      summary: Выставление оценки
+      description: Поставить оценку достопримечательности по её ID
+      operationId: postMark
+      produces:
+        - text/html
+      parameters:
+        - name: attrId
+          in: path
+          description: ID Достопримечательности
+          type: integer
+          format: int64
+        - name: rating
+          in: formData
+          description: Оценка Достопримечательности
+          type: integer
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /attraction/{attrId}:
+    get:
+      tags:
+        - Достопримечательности
+      summary: Найти Достопримечателньость по ID
+      description: Возвращает страницу достопримечательности
+      operationId: getAttrById
+      produces:
+        - text/html
+      parameters:
+        - name: attrId
+          in: path
+          description: ID Достопримечательности
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /profile/:
+    get:
+      tags:
+        - Пользователи
+      summary: Профиль пользователя
+      description: Возвращает страницу Мой Профиль
+      operationId: getUserProfile
+      produces:
+        - text/html
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /search/:
+    get:
+      tags:
+        - Достопримечательности
+      summary: Поиск по названию
+      description: Возвращает результат поиска Достопримечательностей по названию
+      operationId: getSearchAttrByName
+      produces:
+        - text/html
+      parameters:
+        - name: search_attr
+          in: query
+          description: Название Достопримечательности
+          required: true
+          type: string
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /filter/:
+    get:
+      tags:
+        - Достопримечательности
+      summary: Фильтрация и сортировка
+      description: Фильтр по типу и городу и сортировка по алфавиту или средней оценке
+      operationId: getFilter
+      produces:
+        - text/html
+      parameters:
+        - name: selectSort
+          in: query
+          description: Название Достопримечательности
+          type: string
+          default: "alphabetAZ"
+          enum:
+            - "alphabetAZ"
+            - "alphabetZA"
+            - "markUp"
+            - "markDown"
+        - name: selectSort
+          in: query
+          description: Название Города
+          type: string
+        - name: selectType
+          in: query
+          description: Тип Достопримечательности
+          type: string
+          enum:
+            - "Архитектура и памятники"
+            - "Религиозные объекты"
+            - "Природные объекты"
+            - "Исторические объекты"
+            - "Развлекательные объекты"
+            - "Музеи"
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+
+  /request/:
+    get:
+      tags:
+        - Достопримечательности
+      summary: Заявки на добавление достопримечательностей
+      description: Возвращает страницу создания заявки
+      operationId: getCreateRequestPage
+      produces:
+        - text/html
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена
+    post:
+      tags:
+        - Достопримечательности
+      summary: Создание заявки
+      description: Отправляет форму с заявкой на добавление Достопримечательности в Справочник.
+
+        1. Следует создавать заявку лишь для достопримечательности, которая отсутствует в Справочнике.
+
+        2. Введенные данные должны быть верны, а именно название, адрес, описание, город, тип, фото. Они должны быть согласованы между собой и соответствовать действительности, то есть соответствовать реально существующим достопримечательностям.
+
+        3. Описание должно содержать краткую информацию о достопримечательности и составлять не более 300 символов.
+
+        4. Поля должны быть заполнены без орфографических ошибок.
+
+        5. Необходимо добавить 1 фотографию достопримечательности, с разрешением не ниже 1280х720 пикселей. (в интерфейсе swagger нет возможности реализвать загрузку множества файлов через одно поле формы)
+
+        6. Запрещено использовать ненормативную, запрещенную, оскорбительную и разжигающую ненависть лексику.
+
+        7. Запрещена любая реклама и продакт-плейсмент.
+
+        8. Публикуйте фото, уместные для многогранной аудитории. В число запрещенных входят фото, изображающие половые акты, половые органы и полностью обнаженные люди. Изображения обнаженных тел в живописи и скульптуре разрешены.
+
+        При несоблюдении любого из пунктов, заявка будет отклонена.
+      operationId: postCreateRequest
+      produces:
+        - text/html
+      parameters:
+        - name: name
+          in: formData
+          description: Название Достопримечательности
+          required: true
+          type: string
+        - name: city_name
+          in: formData
+          description: Город
+          required: true
+          type: string
+        - name: address
+          in: formData
+          description: Адрес Достопримечательности
+          required: true
+          type: string
+        - name: descriptions
+          in: formData
+          description: Описание Достопримечательности
+          required: true
+          type: string
+        - name: type
+          in: formData
+          description: Тип Достопримечательности
+          required: true
+          type: string
+          enum:
+            - "Архитектура и памятники"
+            - "Религиозные объекты"
+            - "Природные объекты"
+            - "Исторические объекты"
+            - "Развлекательные объекты"
+            - "Музеи"
+        - name: photo
+          description: Фото Достопримечательности
+          required: true
+          in: formData
+          type: file
+      responses:
+        200:
+          description: Успешно
+        400:
+          description: Введены неверные данные
+        404:
+          description: 404 Страница не найдена

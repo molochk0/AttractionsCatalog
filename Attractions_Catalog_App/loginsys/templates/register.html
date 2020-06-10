@@ -1,0 +1,61 @@
+{% extends "baseLoginsys.html" %}
+{% load crispy_forms_tags %}
+{% block navbar %}
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Главная</a>
+            <a class="nav-item nav-link active" href="/auth/login">Вход</a>
+        </div>
+    </div>
+{% endblock navbar %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+                <form action="" method="post" >
+                    {{ form|crispy }}
+                    <div class="checkbox_center">
+                    <input type="checkbox" id="personal_data_agreement" required name="personal_data_agreement">
+
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
+                        Согласие на обработку персональных данных
+                    </button></div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Согласие на обработку персональных данных</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Я даю свое согласие на обработку моих персональных данных, относящихся исключительно к перечисленным ниже
+                                    категориям персональных данных: <strong>адрес
+                                    электронной почты.</strong> Данным согласием я разрешаю автоматизированную, а также без использования средств
+                                    автоматизации обработку моих персональных данных, а именно сбор, запись, систематизацию, накопление,
+                                    хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение,
+                                    предоставление, доступ), обезличивание, блокирование, удаление, уничтожение персональных данных,
+                                    а также осуществление любых иных действий, предусмотренных действующим законом
+                                    Российской Федерации.
+                                    Срок действия данного согласия не ограничен. Подтверждаю, что, давая согласие, я
+                                    действую без принуждения, по собственной воле и в своих интересах.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" style="margin-top: 10px" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                    </div>
+                    {% if valid_error %}
+                        <div class="alert alert-danger" style="margin-top: 10px" role="alert">{{ valid_error }}</div>{% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

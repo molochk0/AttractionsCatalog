@@ -1,0 +1,20 @@
+{% extends "base_attraction.html" %}
+
+
+{% block navbar %}
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Главная</a>
+        </div>
+    </div>
+{% endblock navbar %}
+
+
+{% block function %}
+    <form action="/attraction/moderation/{{ attraction.id }}/decline_request/" method="post" style="margin-top: 10px">
+        <button type="submit" class="btn btn-danger btn-block" style="margin-bottom: 10px">Отклонить</button>
+    </form>
+    <form action="/attraction/moderation/{{ attraction.id }}/accept_request/" method="post" style="margin-top: 10px">
+        <button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 10px">Принять</button>
+    </form>
+{% endblock function %}

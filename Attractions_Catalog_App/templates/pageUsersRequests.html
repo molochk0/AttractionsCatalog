@@ -4,16 +4,40 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/">Главная</a>
-            <a class="nav-item nav-link" href="profile_m">Мой профиль</a>
+            <a class="nav-item nav-link" href="/profile">Мой профиль</a>
         </div>
     </div>
 {% endblock navbar %}
 
 {% block content %}
-    <h5>Тут заявок: {{ attractions.count }}</h5>
+
+    <div class="alert bg-light" style="margin-top: 10px" role="alert">
+        <strong>Правила Модерации Заявок</strong>
+        <ol>
+            <li>Проверить отсутствие такой достопримечательности в Справочнике.</li>
+            <li>Проверить корректность введенных данных, а именно: название, адрес, описание, город, тип, фото. Они
+                должны быть согласованы между собой и соответствовать действительности, то есть соответствовать реально
+                существующим достопримечательностям. Проверку следует осуществлять с помощью сети Интернет.
+            </li>
+            <li>Проверить отсутствие орфографических ошибок.</li>
+            <li>Проверить отсутствие ненормативной, запрещенной, оскорбительной и разжигающей ненависть лексики.</li>
+            <li>Проверить отсутствие рекламы и продакт-плейсмента.</li>
+            <li>Проверить уместность предлагаемых фото, они не должны содержать изображение половых актов, половые
+                органы
+                и полностью обнаженных людей. Изображения обнаженных тел в живописи и скульптуре разрешены.
+            </li>
+        </ol>
+        <strong>При несоблюдении любого из пунктов следует отклонять заявку.</strong>
+    </div>
+
+{% endblock content %}
+
+{% block attractions %}
+    <div class="alert alert-primary" style="margin-top: 10px" role="alert"><p>Заявок для модерации: {{ atr_count }}</p>
+    </div>
     {% for a in attractions %}
-        <div class="card" style="width: 50rem;">
-            <img class="card-img-top" src="{{ a.photo.url }}" alt="Card image cap">
+        <div class="card" style="margin-top: 10px">
+            <img class="card-img-top" src="{{ a.get_image_mainpage.url }}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{ a.name }}</h5>
                 <p class="card-text">{{ a.descriptions }}</p>
@@ -22,31 +46,38 @@
             </div>
         </div>
     {% endfor %}
-{% endblock content %}
+{% endblock attractions %}
 
 {% block paginator3000 %}
- <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
+    {% if atr_count != 0 %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center" style="margin-top: 10px">
             {% if attractions.has_previous %}
-                <li class="page-item"><a class="page-link" href="/{{ url_bonus }}/page/{{ attractions.previous_page_number }}/"
+                <li class="page-item"><a class="page-link"
+                                         href="/{{ url_bonus }}/page/{{ attractions.previous_page_number }}/"
                                          tabindex="-1">&laquo;</a></li>
             {% else %}
                 <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&laquo;</a></li>
             {% endif %}
             {% for page in attractions.paginator.page_range %}
                 {% if page == attractions.number %}
-                    <li class="page-item active"><a class="page-link" href="/{{ url_bonus }}/page/{{ page }}/">{{ page }}<span class="sr-only">(current)</span></a>
+                    <li class="page-item active"><a class="page-link"
+                                                    href="/{{ url_bonus }}/page/{{ page }}/">{{ page }}<span
+                            class="sr-only">(current)</span></a>
                     </li>
                 {% else %}
-                    <li class="page-item"><a class="page-link" href="/{{ url_bonus }}/page/{{ page }}/">{{ page }}</a></li>
+                    <li class="page-item"><a class="page-link" href="/{{ url_bonus }}/page/{{ page }}/">{{ page }}</a>
+                    </li>
                 {% endif %}
             {% endfor %}
             {% if attractions.has_next %}
-                <li class="page-item"><a class="page-link" href="/{{ url_bonus }}/page/{{ attractions.next_page_number }}/" tabindex="-1">&raquo;</a>
+                <li class="page-item"><a class="page-link"
+                                         href="/{{ url_bonus }}/page/{{ attractions.next_page_number }}/" tabindex="-1">&raquo;</a>
                 </li>
             {% else %}
                 <li class="page-item disabled"><a class="page-link" href="" tabindex="-1">&raquo;</a></li>
             {% endif %}
         </ul>
     </nav>
+    {% endif %}
 {% endblock paginator3000 %}
