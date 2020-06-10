@@ -8,8 +8,10 @@
 -  [Справочник Достопримечательностей](https://magnatm.pythonanywhere.com)
 -  [Swagger](https://magnatm.pythonanywhere.com/api-doc/)
 -  [Демо-видео](https://youtu.be/GfDFHuRXeYo)
+-  [Курсовой проект](https://github.com/molochk0/AttractionsCatalog/blob/master/Documents/Course_project.pdf)
+-  [Отчет по ролям](https://github.com/molochk0/AttractionsCatalog/blob/master/Documents/RoleReport_3att.pdf)
 
-## Список участников команды (группа 1.2) и предполагаемое распределение ролей:
+## Список участников команды (группа 1.2) и распределение ролей:
 -  Влад Глущенко - тестирование, backend.
 -  Артем Шипилов - аналитика, составление документации, frontend.
 -  Максим Дуров  - backend, frontend.
