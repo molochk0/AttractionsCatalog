@@ -5,6 +5,10 @@
 -  [Trello](https://trello.com/b/rrm4ue19)
 -  [Miro](https://miro.com/app/board/o9J_kunrj24=/)
 
+-  [Справочник Достопримечательностей](https://magnatm.pythonanywhere.com)
+-  [Swagger](https://magnatm.pythonanywhere.com/api-doc/)
+-  [Демо-видео](https://youtu.be/GfDFHuRXeYo)
+
 ## Список участников команды (группа 1.2) и предполагаемое распределение ролей:
 -  Влад Глущенко - тестирование, backend.
 -  Артем Шипилов - аналитика, составление документации, frontend.
