@@ -10,6 +10,7 @@
 -  [Демо-видео](https://youtu.be/GfDFHuRXeYo)
 -  [Курсовой проект](https://github.com/molochk0/AttractionsCatalog/blob/master/Documents/Course_project.pdf)
 -  [Отчет по ролям](https://github.com/molochk0/AttractionsCatalog/blob/master/Documents/RoleReport_3att.pdf)
+-  [Видеопрезентация проекта](https://youtu.be/cYcUVROTsFE)
 
 ## Список участников команды (группа 1.2) и распределение ролей:
 -  Влад Глущенко - тестирование, backend.
